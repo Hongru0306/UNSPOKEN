@@ -223,6 +223,12 @@ prompt = create_custom_prompt(strategy="reasoning_chain",
   <table>
     <tr>
       <td align="center">
+        <a href="https://github.com/wabyking" target="_blank">
+          <img src="https://avatars.githubusercontent.com/u/9322285?v=4" alt="Hongru Xiao" width="60" style="border-radius:50%;"/><br/>
+          <sub><b>Benyou Wang</b></sub>
+        </a>
+      </td>
+      <td align="center">
         <a href="https://github.com/Hongru0306" target="_blank">
           <img src="https://avatars.githubusercontent.com/u/99795077?v=4" alt="Hongru Xiao" width="60" style="border-radius:50%;"/><br/>
           <sub><b>Hongru Xiao</b></sub>
@@ -232,6 +238,12 @@ prompt = create_custom_prompt(strategy="reasoning_chain",
         <a href="https://github.com/CAI991108" target="_blank">
           <img src="https://avatars.githubusercontent.com/u/89437236?s=100&v=4" alt="Zijin CAI" width="60" style="border-radius:50%;"/><br/>
           <sub><b>Zijin CAI</b></sub>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/clown-yhx" target="_blank">
+          <img src="https://avatars.githubusercontent.com/u/83351559?v=4" alt="Zijin CAI" width="60" style="border-radius:50%;"/><br/>
+          <sub><b>Hanxuan Ye</b></sub>
         </a>
       </td>
     </tr>
