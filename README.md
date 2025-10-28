@@ -7,7 +7,7 @@
   <a href="https://github.com/Hongru0306/UNSPOKEN" target="_blank">
     <img alt="GitHub" src="https://img.shields.io/badge/GitHub-Unspoken-181717?logo=github&logoColor=white" />
   </a>
-  <a href="[https://huggingface.co/datasets/Xhr0306/UNSPOKEN/tree/main](https://huggingface.co/datasets/Xhr0306/UNSPOKEN/tree/main)" target="_blank">
+  <a href="https://huggingface.co/datasets/Xhr0306/UNSPOKEN/tree/main" target="_blank">
     <img alt="Hugging Face" src="https://img.shields.io/badge/Hugging%20Face-Model-ffc107?logo=huggingface&logoColor=white" />
   </a>
 </div>
