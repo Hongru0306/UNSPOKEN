@@ -5,7 +5,8 @@ import json
 import os
 import pandas as pd
 from tqdm import tqdm
-import random
+import traceback
+# import random
 
 config = {
     'direct': {
@@ -87,8 +88,9 @@ def run_experiment(model, df, task, path):
             
             single_score = calculate_single_score(model_single_response, single_select_ans)
             multi_score = calculate_multi_score(model_multi_response, multi_select_ans)
-        except:
-
+        except Exception as e:
+            tqdm.write(f"\nError at Question {i+1}: {e}")
+            traceback.print_exc()
             # **You can rerun the inferencing process for the broken audio files later to get better results**
 
             single_score = 0
@@ -97,8 +99,30 @@ def run_experiment(model, df, task, path):
             model_single_response = ''
             model_multi_response_raw = ''
             model_multi_response = ''
+            # 将失败样本也记录到结果列表中（model_ans/model_ans_raw 置空，score 为 0）
+            single_res.append({
+                'save_path': audio_path,
+                'model_ans_raw': model_single_response_raw,
+                'model_ans': model_single_response,
+                'correct_ans': single_select_ans,
+                'label': label,
+                'language': item['Language'],
+                'score': single_score,
+            })
+
+            multi_res.append({
+                'save_path': audio_path,
+                'model_ans_raw': model_multi_response_raw,
+                'model_ans': model_multi_response,
+                'correct_ans': multi_select_ans,
+                'label': label,
+                'language': item['Language'],
+                'score': multi_score,
+            })
+
             breakdowns_audio.append(audio_path)
             print(f"\nQuestion {i+1} Audio Brokedown: {item['save_path']}\n")
+            # 继续循环，保留失败样本在结果中以便后续统计
             continue
 
         single_res.append({
@@ -121,17 +145,17 @@ def run_experiment(model, df, task, path):
             'score': multi_score,
         })
 
-        print(f'################## Question {i + 1} ##################')
-        print(f"Langue: {item['Language']}")
-        print('               Single Select Question')
-        print(f'{model.model_name}: ', model_single_response)
-        print('Correct Answer: ', single_select_ans)
-        print('Score: ', single_score)
+        tqdm.write(f'################## Question {i + 1} ##################')
+        tqdm.write(f"Langue: {item['Language']}")
+        tqdm.write('               Single Select Question')
+        tqdm.write(f'{model.model_name}: {model_single_response}')
+        tqdm.write(f'Correct Answer: {single_select_ans}')
+        tqdm.write(f'Score: {single_score}')
 
-        print('               Multi Select Question')
-        print(f'{model.model_name}: ', model_multi_response)
-        print('Correct Answer: ', multi_select_ans)
-        print('Score: ', multi_score)
+        tqdm.write('               Multi Select Question')
+        tqdm.write(f'{model.model_name}: {model_multi_response}')
+        tqdm.write(f'Correct Answer: {multi_select_ans}')
+        tqdm.write(f'Score: {multi_score}')
 
     single_score = calculate_single_score_iter(single_res)
     multi_score = calculate_multi_score_iter(multi_res)
@@ -158,14 +182,17 @@ def run_experiment(model, df, task, path):
         for item in breakdowns_audio:
             f.write(item + '\n')
 
+
+
 if __name__ == '__main__':
     
     # model = GPT4oAudioPreview(api_key="", base_url="")
-
+    model = Qwen2OmniAudio(model_path='')
+    # model = Qwen2Audio(model_path='')
     # model = GeminiAudio(model_name='gemini-2.0-flash',api_key='')
-    model = GeminiText(model_name='gemini-1.5-pro',api_key='')
-    df = pd.read_csv('./final_new_with_save_path.csv')
-    path = 'data/audios'
+    # model = GeminiText(model_name='gemini-1.5-pro',api_key='')
+    df = pd.read_csv('./final_utf8.csv')
+    path = './sliced_mp3'
     task = 'direct'  # direct, cot, xlt
 
     run_experiment(model, df, 'direct', path)
